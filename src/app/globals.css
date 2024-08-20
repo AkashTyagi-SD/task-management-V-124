@@ -16,8 +16,8 @@
 }
 
 body {
-  color: var(--text);
-  background-color: var(--bg);
+  /* color: var(--text);
+  background-color: var(--bg); */
 }
 
 a{
