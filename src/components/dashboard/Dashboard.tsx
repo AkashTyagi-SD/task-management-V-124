@@ -1,9 +1,15 @@
 import { FC } from "react";
+import styles from "./Dashboard.module.css";
 
 const Dashboard: FC = () => {
   return (
-    <div>
-      <h1>Welcome to Dashboard</h1>
+    <div className={styles.main}>
+      <div className={styles.card}></div>
+      <div className={styles.card}></div>
+      <div className={styles.card}></div>
+      <div className={styles.card}></div>
+      <div className={styles.card}></div>
+      <div className={styles.card}></div>
     </div>
   );
 };

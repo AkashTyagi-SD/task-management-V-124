@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { Providers } from "./Provider";
 import "./globals.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export const metadata: Metadata = {
   title: "Task Management App",
@@ -14,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="dark:bg-boxdark-2 dark:text-bodydark">{children}</div>
+        <div className="dark:bg-boxdark-2 dark:text-bodydark">
+          <Providers>{children}</Providers>
+        </div>
       </body>
     </html>
   );

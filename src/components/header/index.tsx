@@ -1,7 +1,36 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { RxAvatar } from "react-icons/rx";
+import styles from "./header.module.css";
+
+const HeaderComp = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const HideShowMenuBar = () => {
+    setMenuOpen(!menuOpen);
+  };
+  return (
+    <div className={styles.avtarContainer}>
+      <RxAvatar size={30} color="#ffffff" onClick={() => HideShowMenuBar()} />
+      {menuOpen && (
+        <div className={styles.menubar}>
+          <Link href="" className={styles.linkmenubar}>
+            Profile
+          </Link>
+          <Link href="" className={styles.linkmenubar}>
+            Setting
+          </Link>
+          <Link href="" className={styles.linkmenubar}>
+            LogOut
+          </Link>
+        </div>
+      )}
+    </div>
+  );
+};
 
 const Header = () => {
   const pathname = usePathname();
@@ -9,23 +38,12 @@ const Header = () => {
   const renderText = (type: string): React.ReactNode => {
     switch (type) {
       case "/":
-        return (
-          <>
-            <h1 className="font-medium text-xl mr-4">
-              Are you want to signin?
-            </h1>
-            <Link href="/login" className="mt-1 text-white hover:underline">
-              SignIn
-            </Link>
-          </>
-        );
+        return <HeaderComp />;
       case "/login":
         return (
           <>
-            <h1 className="font-medium text-xl mr-4">
-              Are you want to signup?
-            </h1>
-            <Link href="/signup" className="mt-1 text-white hover:underline">
+            <h1 className={styles.text}>Are you want to signup?</h1>
+            <Link href="/signup" className={styles.link}>
               SignUp
             </Link>
           </>
@@ -33,19 +51,20 @@ const Header = () => {
       case "/signup":
         return (
           <>
-            <h1 className="font-medium text-xl mr-4">Already Signup?</h1>
-            <Link href="/login" className="mt-1 text-white hover:underline">
+            <h1 className={styles.text}>Already Signup?</h1>
+            <Link href="/login" className={styles.link}>
               SignIn
             </Link>
           </>
         );
       default:
+        return <HeaderComp />;
     }
   };
 
   return (
-    <header className="flex py-4 px-2 w-full justify-end bg-cyan-800 sticky top-0">
-      <div className="flex justify-between">{renderText(pathname)}</div>
+    <header className={styles.container}>
+      <div className={styles.childContainer}>{renderText(pathname)}</div>
     </header>
   );
 };

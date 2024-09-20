@@ -1,7 +1,12 @@
 import Signup from "./component";
+import AuthLayout from "@/components/Layouts/AuthLayout";
 
 const Page = () => {
-  return <Signup />;
+  return (
+    <AuthLayout>
+      <Signup />
+    </AuthLayout>
+  );
 };
 
 export default Page;
