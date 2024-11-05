@@ -1,3 +1,4 @@
+import { AUTH_TOKEN } from "@/constant";
 import axios from "axios";
 
 const axiosInstance = axios.create({
@@ -10,7 +11,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     // Add authorization token to headers if available
-    const token = localStorage.getItem("authToken");
+    const token = localStorage.getItem(AUTH_TOKEN);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

@@ -1,4 +1,4 @@
-import Login from "./component";
+import Login from "./component/index";
 import AuthLayout from "@/components/Layouts/AuthLayout";
 const Page = () => {
   return (
