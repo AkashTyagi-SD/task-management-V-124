@@ -1,10 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { FC } from "react";
+import { useRouter } from "next/navigation";
+import { FC, useEffect } from "react";
 import { TypeOf, object, string } from "zod";
 import { Formik, Form, Field } from "formik";
 import { toFormikValidationSchema } from "zod-formik-adapter";
+import { useDispatch, useSelector } from "react-redux";
+import Cookies from "js-cookie";
+import { AppDispatch } from "@/app/store";
+import type { RootState } from "@/app/store";
+import { AUTH_TOKEN } from "@/constant";
+import { loginUser } from "@/app/features/User-authentication/userAuthenticationService";
+import {
+  InitialState,
+  UserInfo,
+  UserLoginPayload,
+} from "@/app/features/User-authentication/userModal";
 
 type LoginFormInput = TypeOf<typeof loginFormSchema>;
 
@@ -16,9 +28,25 @@ const loginFormSchema = object({
 });
 
 const Login: FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const userState: InitialState = useSelector((state: RootState) => state.user);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (userState.userSession) {
+      const data: UserInfo = userState.userSession?.data;
+      Cookies.set(AUTH_TOKEN, data?.token);
+      router.push("/");
+    }
+  }, [userState.userSession, router]);
+
   const handleSubmit = (values: any) => {
     const { email, password } = values;
-    console.log("Form is submitted", email);
+    const payload: UserLoginPayload = {
+      email: email,
+      password: password,
+    };
+    dispatch(loginUser(payload));
   };
 
   return (
@@ -86,7 +114,10 @@ const Login: FC = () => {
                   </div>
                 </div>
                 <div className="mt-5">
-                  <button className="border-2 border-cyan-800 bg-cyan-800 text-white py-1 w-full">
+                  <button
+                    className="border-2 border-cyan-800 bg-cyan-800 text-white py-1 w-full"
+                    type="submit"
+                  >
                     Login
                   </button>
                 </div>

@@ -1,5 +1,6 @@
 import { AUTH_TOKEN } from "@/constant";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8080/api/",
@@ -11,7 +12,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     // Add authorization token to headers if available
-    const token = localStorage.getItem(AUTH_TOKEN);
+    const token = Cookies.get(AUTH_TOKEN);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -19,6 +20,7 @@ axiosInstance.interceptors.request.use(
   },
   (error) => {
     // Handle the error
+    console.log("error", error);
     return Promise.reject(error);
   }
 );
@@ -35,6 +37,7 @@ axiosInstance.interceptors.response.use(
       // For example, redirect to login page on 401 status
       window.location.href = "/login";
     }
+    console.log("reseror", error);
     return Promise.reject(error);
   }
 );
